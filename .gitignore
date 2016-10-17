@@ -1,0 +1,13 @@
+# Eclipse
+.classpath
+.project
+.settings/
+
+
+# Maven
+log/
+target/
+
+# Resources
+src/main/resources/
+
