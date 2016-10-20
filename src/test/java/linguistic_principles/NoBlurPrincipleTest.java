@@ -21,6 +21,8 @@ public class NoBlurPrincipleTest {
 	/** for {@link NoBlurPrinciple#checkICS(representations.InflectionClassSystem)}*/
 	@Test
 	public void test() {
+		NoBlurPrinciple nbp = new NoBlurPrinciple();
+		
 		String[] exponents1 = {"a1", "b1", "c1"};
 		String[] exponents2 = {"a2", "b2", "c1"};
 		String[] exponents3 = {"a3", "b3", "c1"};
@@ -33,13 +35,13 @@ public class NoBlurPrincipleTest {
 		inflClasses.add(new InflectionClass("class 4", exponents4));
 		
 		InflectionClassSystem ics = new InflectionClassSystem("Test System", inflClasses);
-		assertTrue(NoBlurPrinciple.checkICS(ics));
+		assertTrue(nbp.checkICS(ics));
 		
 		String[] exponents5 = {"a3", "b1", "c2"};
 		inflClasses.add(new InflectionClass("class 5", exponents5));
 		ics = new InflectionClassSystem("Test System 2", inflClasses);
 		System.out.println(ics);
-		assertFalse(NoBlurPrinciple.checkICS(ics));
+		assertFalse(nbp.checkICS(ics));
 	}
 
 }

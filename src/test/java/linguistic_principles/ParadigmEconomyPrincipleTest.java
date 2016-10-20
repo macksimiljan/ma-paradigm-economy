@@ -20,6 +20,8 @@ public class ParadigmEconomyPrincipleTest {
 	/** for {@link ParadigmEconomyPrinciple#checkICS(representations.InflectionClassSystem)}*/
 	@Test
 	public void test_checkICS() {
+		ParadigmEconomyPrinciple pep = new ParadigmEconomyPrinciple();
+		
 		String[] exponents1 = {"-n", "-e", "-bum"};
 		String[] exponents2 = {"-en", "-a", "-bum"};
 		String[] exponents3 = {"-n", "-u", "-bim"};
@@ -32,12 +34,12 @@ public class ParadigmEconomyPrincipleTest {
 		classes.add(new InflectionClass("class 4", exponents4));
 		
 		InflectionClassSystem system = new InflectionClassSystem("Test System", classes);
-		assertTrue(ParadigmEconomyPrinciple.checkICS(system));
+		assertTrue(pep.checkICS(system));
 		
 		String[] exponents5 = {"-en", "-o", "-bim"};
 		classes.add(new InflectionClass("class 5", exponents5));
 		system = new InflectionClassSystem("Test System 2", classes);
-		assertFalse(ParadigmEconomyPrinciple.checkICS(system));
+		assertFalse(pep.checkICS(system));
 	}
 
 }

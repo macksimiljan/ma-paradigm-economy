@@ -11,14 +11,10 @@ import representations.InflectionClassSystem;
  * @author MM
  *
  */
-public class NoBlurPrinciple {
+public class NoBlurPrinciple extends Principle {
 	
-	/**
-	 * Checks whether a given inflection class system follows the NBP.
-	 * @param ics Inflection class system.
-	 * @return 'true' iff inflection class system follows the NBP.
-	 */
-	public static boolean checkICS(InflectionClassSystem ics) {
+	@Override
+	public boolean checkICS(InflectionClassSystem ics) {
 		Set<InflectionClass> classes = ics.getInflClasses();
 		int noFeatures = ics.getNoOfFeatures();
 		
@@ -42,6 +38,14 @@ public class NoBlurPrinciple {
 		}
 		
 		return true;		
+	}
+	
+	@Override
+	public int calcMaxSize(InflectionClassSystem ics) {
+		int inventorySize = this.getMarkerInventory(ics).size();
+		int noFeatures = ics.getNoOfFeatures();
+		
+		return (inventorySize - 1) * noFeatures + 1;
 	}
 
 }

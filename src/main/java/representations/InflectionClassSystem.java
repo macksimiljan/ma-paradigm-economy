@@ -46,27 +46,34 @@ public class InflectionClassSystem {
 	/**
 	 * Checks whether an inflection class system is logically correct.
 	 * All markers have to occur and (given an allomorph distribution) at the right slot.
-	 * @param allomorphDistrib Allomorph distribution.
+	 * @param alloDistr Allomorph distribution.
 	 * @return true iff inflection class system is logically correct.
 	 */
-	public boolean isCorrect(Map<Integer, String[]> allomorphDistrib) {
+	public boolean isCorrect(AllomorphDistribution alloDistr) {
 		Map<Integer, Map<String, Boolean>> occAlloMap = new HashMap<Integer, Map<String, Boolean>>();
-		for (Integer feature : allomorphDistrib.keySet()) {
-			String[] allos = allomorphDistrib.get(feature);
+		for (Integer feature : alloDistr.getFeatureIndices()) {
+			Set<String> allos = alloDistr.getExponentsByPos(feature);
 			Map<String, Boolean> innerMap = new HashMap<String, Boolean>();
 			for (String allo : allos) {
 				innerMap.put(allo, false);
 			}
 			occAlloMap.put(feature, innerMap);
 		}
+//		System.out.println("occAlloMap:");
+//		for (int key : occAlloMap.keySet()) {
+//			System.out.println(" key: "+key);
+//			Map<String, Boolean> map = occAlloMap.get(key);
+//			for (String e : map.keySet())
+//				System.out.println("   "+e+" ==> "+map.get(e));
+//		}
 		
 		for (InflectionClass c : inflClasses) {
 			String[] exponents = c.getExponents();
 			for (int i=0; i < exponents.length; i++) {
-				Map<String, Boolean> innerMap = occAlloMap.get((i+1));
-				if (innerMap.keySet().contains(exponents[i])) 
+				Map<String, Boolean> innerMap = occAlloMap.get((i));
+				if (innerMap.keySet().contains(exponents[i]))
 					innerMap.put(exponents[i], true);
-				else
+				else 
 					return false; // Exponent is not allowed
 			}
 		}

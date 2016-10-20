@@ -11,25 +11,35 @@ import representations.InflectionClassSystem;
  * @author MM
  *
  */
-public class ParadigmEconomyPrinciple {
+public class ParadigmEconomyPrinciple extends Principle {
 	
-	/**
-	 * Checks whether a given inflection class system follows the PEP.
-	 * @param ics Inflection class system.
-	 * @return 'true' iff inflection class system follows the PEP.
-	 */
-	public static boolean checkICS(InflectionClassSystem ics) {
+	
+	@Override
+	public boolean checkICS(InflectionClassSystem ics) {
 		Set<InflectionClass> classes = ics.getInflClasses();
 		int actualSize = classes.size();
 		
+		return actualSize <= calcGreatestAllomVariation(ics);
+	}
+
+	@Override
+	public int calcMaxSize(InflectionClassSystem ics) {
+		return calcGreatestAllomVariation(ics);
+	}
+	
+	/**
+	 * Calculates the greatest allomorphic variation over all paradigm cells.
+	 * @param ics Inflection class system.
+	 * @return Number of the greatest allomorphic variation.
+	 */
+	private int calcGreatestAllomVariation(InflectionClassSystem ics) {
 		int greatestAllomVariation = Integer.MIN_VALUE;
 		for (int i = 0; i < ics.getNoOfFeatures(); i++) {
 			int currVar = ics.getAllomorphs(i).size();
 			if (greatestAllomVariation < currVar)
 				greatestAllomVariation = currVar;
 		}
-		
-		return actualSize <= greatestAllomVariation;
+		return greatestAllomVariation;
 	}
 
 }

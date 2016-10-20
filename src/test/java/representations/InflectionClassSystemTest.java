@@ -6,15 +6,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.junit.Test;
-
-import representations.InflectionClass;
-import representations.InflectionClassSystem;
 
 /**
  * Tests for {@link InflectionClassSystem}.
@@ -24,9 +20,10 @@ import representations.InflectionClassSystem;
 public class InflectionClassSystemTest {
 
 	
-	/** for {@link InflectionClassSystem#isCorrect(Map)} */
+	/** for {@link InflectionClassSystem#isCorrect(AllomorphDistribution)} 
+	 * @throws IllegalAccessException */
 	@Test
-	public void test_isCorrect1() {
+	public void test_isCorrect1() throws IllegalAccessException {
 		String[] exponents1 = {"-n", "-e", "-bum"};
 		String[] exponents2 = {"-en", "-a", "-bum"};
 		Set<InflectionClass> classes = new HashSet<InflectionClass>(2);
@@ -34,29 +31,30 @@ public class InflectionClassSystemTest {
 		classes.add(new InflectionClass("class 2", exponents2));		
 		InflectionClassSystem system = new InflectionClassSystem("Test System", classes);
 		
-		Map<Integer, String[]> allomorphMap1 = new HashMap<Integer, String[]>();
-		String[] allos1 = { "-n", "-en" };
-		String[] allos2 = { "-e", "-a" };
-		String[] allos3 = { "-bum" };
-		allomorphMap1.put(1, allos1);
-		allomorphMap1.put(2, allos2);
-		allomorphMap1.put(3, allos3);
+		AllomorphDistribution alloDistr1 = new AllomorphDistribution();
+		String[] allos0 = { "-n", "-en" };
+		String[] allos1 = { "-e", "-a" };
+		String[] allos2 = { "-bum" };
+		alloDistr1.addExponents("10", new HashSet<String>(Arrays.asList(allos0)));
+		alloDistr1.addExponents("3", new HashSet<String>(Arrays.asList(allos1)));
+		alloDistr1.addExponents("451", new HashSet<String>(Arrays.asList(allos2)));
 		
-		assertTrue(system.isCorrect(allomorphMap1));
+		assertTrue(system.isCorrect(alloDistr1));
 		
-		Map<Integer, String[]> allomorphMap2 = new HashMap<Integer, String[]>();
-		String[] allos4 = { "-bum", "-bim" };
-		allomorphMap2.put(1, allos1);
-		allomorphMap2.put(2, allos2);
-		allomorphMap2.put(3, allos4);
+		AllomorphDistribution alloDistr2 = new AllomorphDistribution();
+		String[] allos3 = { "-bum", "-bim" };
+		alloDistr2.addExponents("0", new HashSet<String>(Arrays.asList(allos0)));
+		alloDistr2.addExponents("1", new HashSet<String>(Arrays.asList(allos1)));
+		alloDistr2.addExponents("2", new HashSet<String>(Arrays.asList(allos2)));
+		alloDistr2.addExponents("3", new HashSet<String>(Arrays.asList(allos3)));
 		
-		assertFalse(system.isCorrect(allomorphMap2));
+		assertFalse(system.isCorrect(alloDistr2));
 		
 		String[] exponents3 = {"-en", "-error", "-bum"};
 		classes.add(new InflectionClass("class 3", exponents3));
 		system = new InflectionClassSystem("Test System 2", classes);
 		
-		assertFalse(system.isCorrect(allomorphMap1));
+		assertFalse(system.isCorrect(alloDistr1));
 	}
 	
 	/** for {@link InflectionClassSystem#isCorrect(Set)} */
@@ -95,13 +93,13 @@ public class InflectionClassSystemTest {
 		String[] exponents0 = {"-n"};
 		String[] exponents1 = {"-n", "-e", "-bum"};
 		String[] exponents2 = {"-en", "-a", "-bum"};		
-		Set<InflectionClass> classes = new HashSet<InflectionClass>(2);
+		Set<InflectionClass> classes = new LinkedHashSet<InflectionClass>(2);
 		classes.add(new InflectionClass("class 1", exponents1));
 		classes.add(new InflectionClass("class 2", exponents2));
 		
 		InflectionClassSystem system = new InflectionClassSystem("Test System", classes);
 		
-		Set<InflectionClass> classes2 = new HashSet<InflectionClass>(3);
+		Set<InflectionClass> classes2 = new LinkedHashSet<InflectionClass>(3);
 		classes2.addAll(classes);
 		classes2.add(new InflectionClass("class 0", exponents0));
 		try {

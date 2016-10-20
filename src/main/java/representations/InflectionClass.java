@@ -14,6 +14,7 @@ public class InflectionClass {
 	/** Exponents of this class. */
 	private final String[] exponents;
 	
+	
 	/**
 	 * Constructor. Creates a new inflection class.
 	 * @param label Label of the new class.
@@ -44,7 +45,7 @@ public class InflectionClass {
 	public String[] getExponents() {
 		return exponents;
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
