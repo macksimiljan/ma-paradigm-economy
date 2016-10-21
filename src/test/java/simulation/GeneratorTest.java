@@ -24,8 +24,8 @@ public class GeneratorTest {
 	public void test_calcICSs() throws IllegalAccessException {
 		AllomorphDistribution alloDistr = new AllomorphDistribution();
 		String[] exponents1 = {"a1", "a2", "a3"};
-		String[] exponents2 = {"b1", "b2", "b3", "b4"};
-		String[] exponents3 = {"c1", "c2"};
+		String[] exponents2 = {"b1", "b2", "b3"};
+		String[] exponents3 = {"c1"};
 		alloDistr.addExponents("101", new HashSet<String>(Arrays.asList(exponents1)));
 		alloDistr.addExponents("23", new HashSet<String>(Arrays.asList(exponents2)));
 		alloDistr.addExponents("30", new HashSet<String>(Arrays.asList(exponents3)));
