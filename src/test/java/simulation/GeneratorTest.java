@@ -27,6 +27,7 @@ public class GeneratorTest {
 	@Test
 	public void test_calcICSs() throws IllegalAccessException {
 		AllomorphDistribution alloDistr = new AllomorphDistribution();
+
 		String[] exponents1 = {"{ }"};
 		String[] exponents2 = {"{ }", "kä", "ä"};
 		String[] exponents3 = {"{ }", "ni"};
