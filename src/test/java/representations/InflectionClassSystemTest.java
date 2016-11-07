@@ -150,7 +150,7 @@ public class InflectionClassSystemTest {
 	
 	/** for {@link InflectionClassSystem#getAllomorphs(int)}*/
 	@Test
-	public void text_getAllomorphs() {
+	public void test_getAllomorphs() {
 		String[] exponents1 = {"-n", "-e", "-bum"};
 		String[] exponents2 = {"-en", "-a", "-bum"};		
 		Set<InflectionClass> classes = new HashSet<InflectionClass>(2);
@@ -170,6 +170,27 @@ public class InflectionClassSystemTest {
 		assertEquals(new HashSet<String>(Arrays.asList(e1)), a1);
 		assertEquals(new HashSet<String>(Arrays.asList(e2)), a2);
 		
+	}
+	
+	/**
+	 * for {@link InflectionClassSystem#reduceInflectionClasses(int, String, int, String)}
+	 */
+	@Test
+	public void test() {
+		String[] exponents1 = {"-n", "-e", "-bum"};
+		String[] exponents2 = {"-en", "-a", "-bum"};
+		String[] exponents3 = {"-k", "-ol", "-e"};
+		String[] exponents4 = {"-n", "-e", "-e"};
+		
+		Set<InflectionClass> classes = new HashSet<InflectionClass>(2);
+		classes.add(new InflectionClass("class 1", exponents1));
+		classes.add(new InflectionClass("class 2", exponents2));
+		classes.add(new InflectionClass("class 3", exponents3));
+		classes.add(new InflectionClass("class 4", exponents4));
+		InflectionClassSystem system = new InflectionClassSystem("Test System", classes);
+		
+		Set<InflectionClass> actual = system.reduceInflectionClasses(2, "-e", 1, "-e");
+		System.out.println(actual);
 	}
 
 }

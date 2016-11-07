@@ -1,4 +1,4 @@
-package linguistic_principles;
+package models.linguistic;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import models.linguistic.ParadigmEconomyPrinciple;
 import representations.InflectionClass;
 import representations.InflectionClassSystem;
 

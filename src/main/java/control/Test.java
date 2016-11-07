@@ -1,4 +1,4 @@
-package simulation;
+package control;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -6,6 +6,7 @@ import java.util.Set;
 
 import representations.AllomorphDistribution;
 import representations.InflectionClass;
+import simulation.Generator;
 
 public class Test {
 

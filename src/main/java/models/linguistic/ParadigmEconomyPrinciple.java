@@ -1,4 +1,4 @@
-package linguistic_principles;
+package models.linguistic;
 
 import java.util.Set;
 

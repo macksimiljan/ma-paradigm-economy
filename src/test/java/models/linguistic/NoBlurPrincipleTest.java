@@ -1,4 +1,4 @@
-package linguistic_principles;
+package models.linguistic;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
+import models.linguistic.NoBlurPrinciple;
 import representations.InflectionClass;
 import representations.InflectionClassSystem;
 

@@ -1,8 +1,10 @@
 package representations;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -123,6 +125,17 @@ public class InflectionClassSystem {
 	}
 	
 	/**
+	 * @return Feature IDs.
+	 */
+	public List<Integer> getFeatures() {
+		List<Integer> f = new ArrayList<Integer>();		
+		for (int i = 0; i < getNoOfFeatures(); i++)
+			f.add(i);
+		
+		return f;
+	}
+	
+	/**
 	 * @return number of features
 	 */
 	public int getNoOfFeatures() {
@@ -141,8 +154,55 @@ public class InflectionClassSystem {
 		}
 		return allomorphs;
 	}
+	
+	public String[] getAllomorphsPerInflClass(int feature) {
+		String[] exponents = new String[getInflClasses().size()];
+		int i = 0;
+		for (InflectionClass c : this.inflClasses) {
+			exponents[i] = c.getExponents()[feature];
+			i++;
+		}
+		return exponents;
+	}
+	
 
-
+	/**
+	 * Reduces the set of inflection classes to a subset
+	 * which is the smallest set such that the contained inflection classes
+	 * have a specific exponent for a specific feature.
+	 * @param feature Feature ID.
+	 * @param exponent Exponent.
+	 * @return Reduced set of the inflection classes.
+	 */
+	public Set<InflectionClass> reduceInflectionClasses(int feature, String exponent) {
+		Set<InflectionClass> reducedClasses = new LinkedHashSet<InflectionClass>();
+		
+		for (InflectionClass c : inflClasses) {
+			if (c.getExponents()[feature].equals(exponent))
+				reducedClasses.add(c);
+		}
+		
+		return reducedClasses;
+	}
+	
+	/**
+	 * 
+	 * @param feature1
+	 * @param exponent1
+	 * @param feature2
+	 * @param exponent2
+	 * @return
+	 */
+	public Set<InflectionClass> reduceInflectionClasses(int feature1, String exponent1, int feature2, String exponent2) {
+		Set<InflectionClass> reducedClasses = new LinkedHashSet<InflectionClass>();
+		
+		for (InflectionClass c : inflClasses) {
+			if (c.getExponents()[feature1].equals(exponent1) && c.getExponents()[feature2].equals(exponent2))
+				reducedClasses.add(c);
+		}
+		
+		return reducedClasses;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
