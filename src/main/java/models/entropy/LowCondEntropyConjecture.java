@@ -24,6 +24,7 @@ public class LowCondEntropyConjecture {
 	public float calcInflectionEntropy(InflectionClassSystem ics) {
 		float p = 1.0f / ics.getInflClasses().size();
 		float entropy = (float) (- Math.log(p) / Math.log(2));
+		entropy = Math.round(entropy * 1000) / 1000f;
 		
 		return entropy;
 	}
@@ -43,6 +44,7 @@ public class LowCondEntropyConjecture {
 				float p = noHits * 1.0f / ics.getInflClasses().size();
 				entropy += p * (float) (- Math.log(p) / Math.log(2));
 			}
+			entropy = Math.round(entropy * 1000) / 1000f;
 			entropies.put(feature, entropy);
 		}
 		
@@ -54,16 +56,37 @@ public class LowCondEntropyConjecture {
 		int totalNumber = ics.getInflClasses().size();
 		
 		Map<Integer, Float> paradigmCellEntropy = calcParadigmCellEntropy(ics);
-				
-		float[][] matrix = new float[dimension][dimension];
+		
+		float[] colSum = new float[dimension];
+		float[][] matrix = new float[dimension+1][dimension+1];
 		for (int givenFeature = 0; givenFeature < dimension; givenFeature++) {
 			String[] givenExponents = ics.getAllomorphsPerInflClass(givenFeature);
+			float lineSum = 0;
 			for (int predictedFeature = 0; predictedFeature < dimension; predictedFeature++) {
+				if (givenFeature == predictedFeature)
+					continue;
+				
 				String[] predictedExponents = ics.getAllomorphsPerInflClass(predictedFeature);
-				float entropy = Math.round(calcCondEntropyBetweenTwoCells(givenExponents, predictedExponents) * 1000f) / 1000f;
+				float entropy = Math.round(calcCondEntropyBetweenTwoCells(givenExponents, predictedExponents) * 1000) / 1000f;
 				matrix[givenFeature][predictedFeature] = entropy;
-			}		
-		}	
+				
+				lineSum += entropy;
+				colSum[predictedFeature] += entropy;
+			}
+			// add line average
+			matrix[givenFeature][dimension] = Math.round((1f * lineSum / (dimension - 1)) * 1000) / 1000f; 
+		}
+		
+		// add column average
+		float allAvg = 0;
+		for (int i = 0; i < colSum.length; i++) {
+			float avg = colSum[i] * 1f / (dimension - 1);
+			matrix[matrix.length-1][i] = Math.round(avg * 1000) / 1000f;
+			
+			allAvg += avg;
+		}
+		
+		matrix[matrix.length - 1][matrix.length - 1] = Math.round(allAvg / dimension * 1000) / 1000f;
 		
 		return matrix;
 	}

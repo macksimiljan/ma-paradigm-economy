@@ -32,6 +32,12 @@ public class AllomorphDistribution {
 		}
 	}
 	
+	/**
+	 * Adds a feature and its exponent to the allomorph distribution.
+	 * @param feature
+	 * @param exponents
+	 * @throws IllegalAccessException If the feature is already mapped.
+	 */
 	public void addExponents(String feature, Set<String> exponents) throws IllegalAccessException {
 		if (this.feature2index.containsKey(feature))
 			throw new IllegalAccessException("The feature '"+feature+"' is already mapped!");

@@ -176,7 +176,7 @@ public class InflectionClassSystemTest {
 	 * for {@link InflectionClassSystem#reduceInflectionClasses(int, String, int, String)}
 	 */
 	@Test
-	public void test() {
+	public void test_reduceInflectionClasses() {
 		String[] exponents1 = {"-n", "-e", "-bum"};
 		String[] exponents2 = {"-en", "-a", "-bum"};
 		String[] exponents3 = {"-k", "-ol", "-e"};
@@ -190,7 +190,29 @@ public class InflectionClassSystemTest {
 		InflectionClassSystem system = new InflectionClassSystem("Test System", classes);
 		
 		Set<InflectionClass> actual = system.reduceInflectionClasses(2, "-e", 1, "-e");
+		System.out.println("Test: test_reduceInflectionClasses()");
 		System.out.println(actual);
+	}
+	
+	/**
+	 * for {@link InflectionClassSystem#calcNoInterParadigmSyncretims()}
+	 * for {@link InflectionClassSystem#calcNoSyncretims()}
+	 */
+	@Test
+	public void test_noSyncretisms() {
+		String[] exponents1 = {"a", "a", "a"};
+		String[] exponents2 = {"b", "b", "b"};
+		String[] exponents3 = {"c", "c", "a"};
+		String[] exponents4 = {"a", "d", "a"};		
+		Set<InflectionClass> classes = new HashSet<InflectionClass>(2);
+		classes.add(new InflectionClass("class 1", exponents1));
+		classes.add(new InflectionClass("class 2", exponents2));
+		classes.add(new InflectionClass("class 3", exponents3));
+		classes.add(new InflectionClass("class 4", exponents4));
+		InflectionClassSystem system = new InflectionClassSystem("Test System", classes);
+		
+		assertEquals(19, system.calcNoSyncretims());
+		assertEquals(4, system.calcNoInterParadigmSyncretims());
 	}
 
 }

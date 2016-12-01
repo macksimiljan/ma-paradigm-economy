@@ -83,9 +83,10 @@ public class LowCondEntropyConjectureTest {
 		List<String> labels = loader.getFeatureLables();
 		for (String label : labels)
 			System.out.print("\t"+label);
+		System.out.print("\tE[row]");
 		System.out.print("\n");
 		for (int row = 0; row < matrix.length; row++) {
-			System.out.print(labels.get(row));
+			System.out.print((row < matrix.length - 1) ? labels.get(row) : "E[col]");
 			for (float cell : matrix[row])
 				System.out.print("\t"+cell);
 			System.out.print("\n");

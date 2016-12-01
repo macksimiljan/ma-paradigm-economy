@@ -1,6 +1,7 @@
 package representations;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -115,7 +116,9 @@ public class InflectionClassSystem {
 		return copy.size() == 0;
 	}
 	
-	
+	public String getLabel() {
+		return label;
+	}
 
 	/**
 	 * @return the inflClasses
@@ -204,6 +207,58 @@ public class InflectionClassSystem {
 		return reducedClasses;
 	}
 
+	
+	public int calcNoSyncretims() {
+		int no = 0;
+		
+		Map<String, Integer> occurrences = new HashMap<String, Integer>();
+		for (InflectionClass c : inflClasses) {
+			for (String exponent : c.getExponents()) {
+				Integer val = occurrences.get(exponent);
+				if (val == null)
+					occurrences.put(exponent, 1);
+				else
+					occurrences.put(exponent, (val+1));
+			}
+		}
+		
+		for (String key : occurrences.keySet()) {
+			int sum = 0;
+			for (int i = 1; i < occurrences.get(key); i++) {
+				sum += occurrences.get(key) - i;
+			}
+			no += sum;
+		}
+		
+		return no;
+	}
+	
+	public int calcNoInterParadigmSyncretims() {
+		int no = 0;
+		for (InflectionClass c : inflClasses) {
+			Map<String, Integer> occurrences = new HashMap<String, Integer>();
+			for (String exponent : c.getExponents()) {				
+				Integer val = occurrences.get(exponent);
+				if (val == null)
+					occurrences.put(exponent, 1);
+				else
+					occurrences.put(exponent, (val+1));
+			}
+			
+			for (String key : occurrences.keySet()) {
+				int sum = 0;
+				for (int i = 1; i < occurrences.get(key); i++) {
+					sum += occurrences.get(key) - i;
+				}
+				no += sum;
+			}
+		}
+				
+		return no;
+	}
+	
+
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
